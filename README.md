@@ -8,5 +8,5 @@ point and click "builder" to generate some generic survey.
 The sample data will give you an idea how it is structured so you can adapt it to your own survey. 
 
 Results processing will depend upon how your survey functions. In this case, it will be a sum function
-of results in each category of statements. Your needs wilkl likely be entirely differnt, or may be similar.
+of results in each category of statements. Your needs will likely be entirely different, or may be similar.
 Results processing for this sample code will follow, as well as a much more robust database connector.
