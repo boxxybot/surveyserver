@@ -1,0 +1,21 @@
+CREATE TABLE `questions` (
+  `domain` varchar(2) NOT NULL DEFAULT 'zz',
+  `category` varchar(2) NOT NULL DEFAULT 'yy',
+  `text` varchar(255) NOT NULL DEFAULT 'vv',
+  `number` int(11) NOT NULL AUTO_INCREMENT,
+  `active` char(1) NOT NULL DEFAULT 'T',
+  PRIMARY KEY (`category`,`number`,`active`,`domain`),
+  UNIQUE KEY `questions_UNIQUE` (`text`),
+  UNIQUE KEY `question_number_UNIQUE` (`number`)
+) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=big5;
+
+
+CREATE TABLE `responses` (
+  `idresponses` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` varchar(40) NOT NULL,
+  `question_number` int(11) NOT NULL,
+  `scale` int(11) NOT NULL,
+  `weight` int(11) NOT NULL,
+  `sent` timestamp(2) NOT NULL DEFAULT CURRENT_TIMESTAMP(2) ON UPDATE CURRENT_TIMESTAMP(2),
+  PRIMARY KEY (`idresponses`,`userid`,`question_number`,`scale`,`weight`,`sent`)
+) ENGINE=InnoDB AUTO_INCREMENT=28968 DEFAULT CHARSET=big5;
