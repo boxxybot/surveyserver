@@ -1,0 +1,13 @@
+LOCK TABLES `survey`.`questions` WRITE;
+/*!40000 ALTER TABLE `survey`.`questions` DISABLE KEYS */;
+INSERT INTO `survey`.`questions` VALUES 
+('oi','ei','A lot of anger and resentment build up inside of me that I don\'t express.',146,'t'),
+('oi','as','Accomplishments are most valuable to me if other people notice them.',200,'t'),
+('ia','fa','Almost nothing I do at work (or school) is as good as other people can do.',69,'t'),
+('oi','us','Almost nothing I do is quite good enough; I can always do better.',157,'t'),
+('od','ss','At work, I\'m usually the one to volunteer to do extra tasks or to put in extra time.',132,'t'),
+('dr','ma','During my life, those close to me have taken advantage of me or used me for their own purposes.',42,'t'),
+('oi','as','Even if I don\'t like someone, I still want him or her to like me.',204,'t'),;
+/*!40000 ALTER TABLE `survey`.`questions` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
