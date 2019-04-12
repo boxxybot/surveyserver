@@ -1,5 +1,5 @@
-""" Surveyserver.py - a basic survey engine   
-    Copyright (C) 2019, Bradley Sanders
+''' server.py a basic survey engine
+    Copyright (C) 2019 Bradley Sanders
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -13,8 +13,8 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""	
-import os, uuid, collections, pandas, mydbconn, myresults
+'''
+import os, uuid, collections, pandas, dbconn, myresults
 from bottle import route, run, template, response, request
 
 class next_statement:
@@ -30,14 +30,9 @@ class next_statement:
 			self.qnum = line.number.item()
 			print('line not in set ' + str(thisline))
 
-#Get a working cursor
-
-db = mydbconn.connect('survey')
-cursor = db.cursor()
-
 #Load the statement list into memory
 
-statements = mydbconn.fetch_queries(cursor)
+statements = mydbconn.fetch_queries()
 lastrow = int(statements.tail(1).number.item())
 #print(statements)
 
@@ -87,7 +82,7 @@ def schema_post():
 				lastline = 0
 
 		#save result of query
-		mydbconn.save_response(cursor,userid,lastline,scale,weight)
+		dbconn.save_response(userid,lastline,scale,weight)
 
 		#return next statement
 		if lastline == lastrow:
