@@ -20,7 +20,7 @@ Very simple database connector.
 '''
 def connect(_db):
 	try:
-		return MySQLdb.connect(host='localhost',user='survey',passwd='slash2me',db=_db)
+		return MySQLdb.connect(host='localhost',user='survey',passwd='password',db=_db)
 	except:
 		raise Exception('Unable to connect to database server -- aborting')
 
