@@ -1,10 +1,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://domainpath/survey.css">
+<link rel="stylesheet" href="http://mydomain/static/survey.css">
 </head>
-<script>
-<script src="http//static.domainpath/survey.js" type="text/javascript">
-</script>
 <body>
 <p>{{q}}</p>
 <div class='formresponse'>
@@ -13,8 +10,8 @@
   <input type="range" min="1" max="6" class="slider" id="myRange" name='w'>
   <p><span id="demo" class='prompt'></span></p>
 </div>
-<input type='hidden' name='q' value='{{n}}'><br>
-<input type='hidden' name='s'><br>
+<input type='hidden' name='q' value='{{n}}'>
+<input type='hidden' name='s' id='blarg' value="0"><br>
 <input type='submit' id='submit' value='Next' style='visibility:hidden'>
 </div>
 </form>
@@ -33,5 +30,12 @@ slider.oninput = function() {
   document.getElementById("submit").style.visibility='visible';
   output.innerHTML = stringval;
 }
+var arrivalDate = new Date().getTime();
+var x = setInterval(function() {
+	var now = new Date().getTime();
+	var distance = now - arrivalDate;
+	var seconds = Math.floor(distance / 1000);
+	document.getElementById("blarg").value = seconds;
+}, 1000);
 </script>
 </body>
