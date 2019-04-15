@@ -45,8 +45,10 @@ def fetch_queries():
 
 def get_results(userid):
 	mysqlsel = '''select
+	responses.question_number,
 	responses.scale,
 	responses.weight,
+	responses.sent,
 	questions.category,
 	questions.positivemask,
 	questions.text
@@ -56,7 +58,7 @@ def get_results(userid):
 	cursor = db.cursor()
 	cursor.execute(mysqlsel)
 	df = pandas.DataFrame(list(cursor.fetchall()))
-	df.columns = ['scale','weight','category','positivemask','text']
+	df.columns = ['number','scale','weight','sent','category','positivemask','text']
 	db.close()
 	return df
 	
