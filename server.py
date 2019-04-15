@@ -32,7 +32,7 @@ class next_statement:
 
 #Load the statement list into memory
 
-statements = mydbconn.fetch_queries()
+statements = dbconn.fetch_queries()
 lastrow = int(statements.tail(1).number.item())
 #print(statements)
 
@@ -71,6 +71,9 @@ def schema_post():
 		userid = request.get_cookie("account")
 		
 		#Figure out last question answered
+		#print(str(request.params.get("q")))
+		#print(str(request.params.get("s")))
+		#print(str(request.params.get("w")))
 		try:
 			lastline = int(request.params.get("q"))
 			scale = int(request.params.get("s"))
@@ -80,6 +83,7 @@ def schema_post():
 				lastline = int(request.get_cookie("lastline"))
 			else:
 				lastline = 0
+			print('lastline exception: lastline=' + str(lastline))
 
 		#save result of query
 		dbconn.save_response(userid,lastline,scale,weight)
@@ -87,7 +91,8 @@ def schema_post():
 		#return next statement
 		if lastline == lastrow:
 			#Redirect to completion summary
-			pass
+			results = myresults.prepare_page(userid)
+			return results
 		else:
 			s = next_statement(statements,lastline)
 			response.set_cookie("lastline", str(s.qnum))
