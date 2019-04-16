@@ -4,11 +4,11 @@ CREATE TABLE `questions` (
   `text` varchar(255) NOT NULL DEFAULT 'vv',
   `number` int(11) NOT NULL AUTO_INCREMENT,
   `active` char(1) NOT NULL DEFAULT 'T',
+  `positivemask` varchar(6) NOT NULL DEFAULT '56',
   PRIMARY KEY (`category`,`number`,`active`,`domain`),
   UNIQUE KEY `questions_UNIQUE` (`text`),
   UNIQUE KEY `question_number_UNIQUE` (`number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=big5;
-
 
 CREATE TABLE `responses` (
   `idresponses` int(11) NOT NULL AUTO_INCREMENT,
@@ -18,4 +18,5 @@ CREATE TABLE `responses` (
   `weight` int(11) NOT NULL,
   `sent` timestamp(2) NOT NULL DEFAULT CURRENT_TIMESTAMP(2) ON UPDATE CURRENT_TIMESTAMP(2),
   PRIMARY KEY (`idresponses`,`userid`,`question_number`,`scale`,`weight`,`sent`)
-) ENGINE=InnoDB AUTO_INCREMENT=28968 DEFAULT CHARSET=big5;
+) ENGINE=InnoDB AUTO_INCREMENT=29341 DEFAULT CHARSET=big5;
+
