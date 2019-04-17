@@ -14,7 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
-import MySQLdb, pandas, credentials
+import MySQLdb, pandas
+from uuid import UUID
+import credentials
 '''
 Very simple database connector. 
 '''
@@ -26,10 +28,13 @@ def connect(_db):
 
 
 def save_response(userid,lastq,scale,weight):
-	mysqlsel = "insert into responses(userid,question_number, scale, weight) values ('" + userid + "'," + str(lastq) + "," + str(scale) + "," + str(weight) + ");"
+	lastq = str(lastq).rjust(6).strip()
+	userid = UUID(userid, version=4)
+	vals = (userid,str(lastq),str(scale),str(weight))
+	mysqlsel = "insert into responses(userid,question_number, scale, weight) values (%s, %s, %s, %s);"
 	db = connect('survey')
 	cursor = db.cursor()
-	cursor.execute(mysqlsel)
+	cursor.execute(mysqlsel,vals)
 	db.commit()
 	db.close()
 
@@ -44,7 +49,8 @@ def fetch_queries():
 	return df
 
 def get_results(userid):
-	mysqlsel = '''select
+	userid = UUID(userid, version=4)
+	mysqlsel = f'''select
 	responses.question_number,
 	responses.scale,
 	responses.weight,
@@ -53,7 +59,7 @@ def get_results(userid):
 	questions.positivemask,
 	questions.text
 	FROM survey.responses inner join survey.questions
-	on questions.number = responses.question_number where responses.userid like \'''' + str(userid) + "';"
+	on questions.number = responses.question_number where responses.userid like \'{userid}\';'''
 	db = connect('survey')
 	cursor = db.cursor()
 	cursor.execute(mysqlsel)
