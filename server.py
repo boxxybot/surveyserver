@@ -76,8 +76,8 @@ def schema_post():
 		#print(str(request.params.get("w")))
 		try:
 			lastline = int(request.params.get("q"))
-			scale = int(request.params.get("s"))
-			weight = int(request.params.get("w"))
+			scale = int(request.params.get("s")[0])
+			weight = int(request.params.get("w")[0])
 		except:
 			if request.get_cookie("lastline"):
 				lastline = int(request.get_cookie("lastline"))
@@ -102,6 +102,8 @@ def schema_post():
 		response.set_cookie("account", str(uuid.uuid4()))
 		return template('survey_intro')
 
+@error(500):
+	return("<body>Something went completely wrong. We're sorry we've failed you.<p>Please use the back function in your browser and try the page again.</body>")
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 8088))
