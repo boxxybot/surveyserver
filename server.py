@@ -15,7 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 import os, uuid, collections, pandas, dbconn, myresults
-from bottle import route, run, template, response, request
+from bottle import route, run, template, response, request, error
 
 class next_statement:
 	def __init__(self,statements,thisline):
@@ -102,8 +102,9 @@ def schema_post():
 		response.set_cookie("account", str(uuid.uuid4()))
 		return template('survey_intro')
 
-@error(500):
-	return("<body>Something went completely wrong. We're sorry we've failed you.<p>Please use the back function in your browser and try the page again.</body>")
+@error(500)
+def error_500():
+	return template('error_500')
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 8088))
