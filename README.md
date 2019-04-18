@@ -9,4 +9,4 @@ The sample data will give you an idea how it is structured so you can adapt it t
 
 Results processing will depend upon how your survey functions. In this case, it will be a sum function
 of results in each category of statements. Your needs will likely be entirely different, or may be similar.
-Results processing for this sample code will follow, as well as a much more robust database connector.
+Results processing for this sample code will follow.
