@@ -16,19 +16,18 @@
 '''
 import MySQLdb, pandas
 from uuid import UUID
-import credentials
+from config import surveyserver_password
 '''
 Very simple database connector. 
 '''
 def connect(_db):
 	try:
-		return MySQLdb.connect(host='localhost',user='survey',passwd=credentials.surveyserver_password,db=_db)
+		return MySQLdb.connect(host='localhost',user='survey',passwd=surveyserver_password,db=_db)
 	except:
 		raise Exception('Unable to connect to database server -- aborting')
 
 
 def save_response(userid,lastq,scale,weight):
-	lastq = str(lastq).rjust(6).strip()
 	userid = UUID(userid, version=4)
 	vals = (userid,str(lastq),str(scale),str(weight))
 	mysqlsel = "insert into responses(userid,question_number, scale, weight) values (%s, %s, %s, %s);"
