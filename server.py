@@ -71,13 +71,10 @@ def schema_post():
 		userid = request.get_cookie("account")
 		
 		#Figure out last question answered
-		#print(str(request.params.get("q")))
-		#print(str(request.params.get("s")))
-		#print(str(request.params.get("w")))
 		try:
 			lastline = int(request.params.get("q"))
-			scale = int(request.params.get("s")[0])
-			weight = int(request.params.get("w")[0])
+			scale = int(request.params.get("s"))
+			weight = int(request.params.get("w"))
 		except:
 			if request.get_cookie("lastline"):
 				lastline = int(request.get_cookie("lastline"))
