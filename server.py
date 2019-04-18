@@ -15,6 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 import os, uuid, collections, pandas, dbconn, myresults
+from config import static_path
 from bottle import route, run, template, response, request, error
 
 class next_statement:
@@ -43,7 +44,7 @@ def index():
 	else:
 		response.set_cookie("account", str(uuid.uuid4()))
 
-	return template('survey_intro')
+	return template('survey_intro',static=static_path)
 
 @route('/schema')
 def schema():
@@ -61,7 +62,7 @@ def schema():
 	s = next_statement(statements,lastline)
 	response.set_cookie("lastline", str(s.qnum))
 
-	return template('response_html',n=s.qnum, q=s.question)
+	return template('response_html',n=s.qnum, q=s.question,static=static_path)
 
 @route('/schema', method='POST')
 def schema_post():
@@ -93,15 +94,15 @@ def schema_post():
 		else:
 			s = next_statement(statements,lastline)
 			response.set_cookie("lastline", str(s.qnum))
-			return template('response_html',n=s.qnum, q=s.question)
+			return template('response_html',n=s.qnum, q=s.question,static=static_path)
 
 	else:
 		response.set_cookie("account", str(uuid.uuid4()))
-		return template('survey_intro')
+		return template('survey_intro',static=static_path)
 
 @error(500)
 def error_500():
-	return template('error_500')
+	return template('error_500',static=static_path)
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 8088))
