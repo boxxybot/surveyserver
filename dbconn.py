@@ -16,13 +16,13 @@
 '''
 import MySQLdb, pandas
 from uuid import UUID
-from config import surveyserver_password
+from config import db_user,db_password,db_server,db_db
 '''
 Very simple database connector. 
 '''
 def connect(_db):
 	try:
-		return MySQLdb.connect(host='localhost',user='survey',passwd=surveyserver_password,db=_db)
+		return MySQLdb.connect(host=db_server,user=db_user,passwd=db_password,db=_db)
 	except:
 		raise Exception('Unable to connect to database server -- aborting')
 
@@ -31,7 +31,7 @@ def save_response(userid,lastq,scale,weight):
 	userid = UUID(userid, version=4)
 	vals = (userid,str(lastq),str(scale),str(weight))
 	mysqlsel = "insert into responses(userid,question_number, scale, weight) values (%s, %s, %s, %s);"
-	db = connect('survey')
+	db = connect(db_db)
 	cursor = db.cursor()
 	cursor.execute(mysqlsel,vals)
 	db.commit()
@@ -39,7 +39,7 @@ def save_response(userid,lastq,scale,weight):
 
 def fetch_queries():
 	mysqlsel = "select text,number from survey.questions where active='t' order by number;"
-	db = connect('survey')
+	db = connect(db_db)
 	cursor = db.cursor()
 	cursor.execute(mysqlsel)
 	df = pandas.DataFrame(list(cursor.fetchall()))
@@ -59,7 +59,7 @@ def get_results(userid):
 	questions.text
 	FROM survey.responses inner join survey.questions
 	on questions.number = responses.question_number where responses.userid like \'{userid}\';'''
-	db = connect('survey')
+	db = connect(db_db)
 	cursor = db.cursor()
 	cursor.execute(mysqlsel)
 	df = pandas.DataFrame(list(cursor.fetchall()))
